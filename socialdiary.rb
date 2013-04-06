@@ -10,6 +10,9 @@ require 'omniauth-evernote'
 require 'omniauth-facebook'
 require 'omniauth-twitter'
 require 'pry-remote'
+require 'twitter'
+require 'evernote_oauth'
+require 'evernote-thrift'
 
 require './models/user'
 require './config/environments'
@@ -76,6 +79,16 @@ get '/protected' do
   throw(:halt, [401, "Not authorized\n"]) unless session[:authenticated]
   erb "<pre>#{request.env['omniauth.auth'].to_json}</pre><hr>
        <a href='/logout'>Logout</a>"
+end
+
+get '/diary' do
+  @activities = if params[:activities].present?
+    MultiJson.decode(params[:activities], symbolize_keys: true)
+  else
+    @user.tweets
+  end
+  @date = params[:date] || Date.today
+  erb :diary, layout: false
 end
 
 get '/logout' do

@@ -18,3 +18,8 @@ gem "sqlite3"
 gem 'thin'
 
 gem 'pry-remote'
+
+gem 'evernote_oauth'
+gem 'evernote-thrift'
+gem "twitter"
+gem 'foreman'
