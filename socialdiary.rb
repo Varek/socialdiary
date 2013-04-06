@@ -82,12 +82,13 @@ get '/protected' do
 end
 
 get '/diary' do
-  @activities = if params[:activities].present?
-    MultiJson.decode(params[:activities], symbolize_keys: true)
+  if params[:activities].present?
+    @activities = MultiJson.decode(params[:activities], symbolize_keys: true)
+    @activities.each{|a| a[:created_at] = DateTime.parse(a[:created_at])}
   else
-    @user.tweets
+    @activities = @user.tweets
   end
-  @date = params[:date] || Date.today
+  @date = Date.parse(params[:date]) || Date.today
   erb :diary, layout: false
 end
 

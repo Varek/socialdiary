@@ -1,14 +1,20 @@
 class User < ActiveRecord::Base
 
-  def tweets(date=Date.today)
-    Twitter.configure do |config|
+
+  def twitter
+    @twitter_client ||= Twitter.configure do |config|
       config.consumer_key = ENV['TWITTER_KEY']
       config.consumer_secret = ENV['TWITTER_SECRET']
       config.oauth_token = self.twitter_token
       config.oauth_token_secret = self.twitter_secret
     end
-    Twitter.user_timeline(:count => 50).select{|t| t.created_at.to_date == date}.reverse.map do |tweet|
-        {type: 'tweet', created_at: tweet.created_at, content: tweet.text}
+  end
+
+  def tweets(date=Date.today)
+    twitter.user_timeline(:count => 50).select{|t| t.created_at.to_date == date}.reverse.map do |tweet|
+        tweet_content = tweet.text
+        tweet.urls.each {|w| tweet_content.gsub!(w.url,"<a href='#{w.expanded_url}'>#{w.display_url}</a>")}
+        {type: 'tweet', created_at: tweet.created_at, content: tweet_content}
       end
   end
 
