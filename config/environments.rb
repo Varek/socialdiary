@@ -1,0 +1,1 @@
+set :database, 'sqlite3:///development.sqlite3'

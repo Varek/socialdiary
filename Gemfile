@@ -9,7 +9,12 @@ gem 'omniauth-oauth2'
 gem 'omniauth-evernote'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
+
+gem "rake"
 gem 'activerecord'
 gem 'sinatra-activerecord' # excellent gem that ports ActiveRecord for Sinatra
+gem "sqlite3"
 
 gem 'thin'
+
+gem 'pry-remote'

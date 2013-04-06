@@ -12,7 +12,7 @@ test/tmp
 test/version_tmp
 tmp
 .env
-
+development.sqlite3
 # YARD artifacts
 .yardoc
 _yardoc
