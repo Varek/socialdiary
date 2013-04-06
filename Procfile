@@ -1,0 +1,1 @@
+web: bundle exec ruby socialdiary.rb -p $PORT

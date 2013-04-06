@@ -1,2 +1,2 @@
-evernote_socialdiary
+socialdiary
 ====================
