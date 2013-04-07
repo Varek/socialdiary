@@ -9,6 +9,7 @@ gem 'omniauth-oauth2'
 gem 'omniauth-evernote'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
+gem 'omniauth-foursquare'
 
 gem "rake"
 gem 'activerecord'
@@ -27,3 +28,4 @@ gem 'faraday'
 gem "faraday_middleware", "~> 0.8.7"
 gem "EyeEmConnector"
 gem "koala", "~> 1.6.0"
+gem "foursquare2"

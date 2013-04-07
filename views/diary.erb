@@ -37,7 +37,7 @@
               <p style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;">
                 <%= activity[:caption] %>
               </p>
-              <img src="<%= activity[:photo_url]%>" width="347" height="347" style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;width:347px;margin-top:10px;" />
+              <img src="<%= activity[:photo_url]%>" width="347" style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;width:347px;margin-top:10px;" />
             </div>
           </div>
         <% elsif activity[:type] == 'facebook_status' %>
@@ -64,7 +64,7 @@
             <p style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;">
              <%= activity[:caption] %>
             </p>
-            <img src="<%= activity[:photo_url]%>" width="347" height="347" style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;width:347px;margin-top:10px;" />
+            <img src="<%= activity[:photo_url]%>" width="347" style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;width:347px;margin-top:10px;" />
            </div>
           </div>
         <% elsif activity[:type] == 'facebook_links' %>
@@ -81,6 +81,27 @@
              <%= activity[:link_description] %>
             </p>
             <img src="<%= activity[:link_picture]%>" width="347" height="347" style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;width:347px;margin-top:10px;" />
+           </div>
+          </div>
+        <% elsif activity[:type] == 'foursquare_checkins' %>
+          <div style="margin:auto;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;width:367px;">
+           <div style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;width:367px;height:35px;background-image:url(http://localhost:5000/images/foursquare_card_header.jpg);">
+            <p style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:12px;vertical-align:baseline;background-color:transparent;padding-top:12px;color:rgb(255, 255, 255);">
+             <%= activity[:created_at].strftime("%H:%M") %>
+            </p>
+           </div>
+           <div style="margin:0px;padding:15px 10px 25px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:rgb(255, 255, 255);width:347px;word-wrap:break-word;line-height:normal;text-align:left;color:rgb(51, 51, 51);">
+            <p style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;">
+             checked in at
+             <%= activity[:venue] %>
+            </p>
+            <p style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;">
+             <%= activity[:content] %>
+            </p>
+            <% if activity[:photo_url].present? %>
+              <img src="<%= activity[:photo_url]%>" width="347" style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;width:347px;margin-top:10px;" />
+            <% end %>
+            </div>
            </div>
           </div>
         <% end %>

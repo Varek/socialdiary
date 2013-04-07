@@ -9,6 +9,7 @@ require 'omniauth'
 require 'omniauth-evernote'
 require 'omniauth-facebook'
 require 'omniauth-twitter'
+require 'omniauth-foursquare'
 require 'pry-remote'
 require 'twitter'
 require 'evernote_oauth'
@@ -17,6 +18,7 @@ require 'faraday'
 require 'faraday_middleware'
 require 'EyeEmConnector'
 require 'koala'
+require 'foursquare2'
 
 
 require './models/user'
@@ -31,6 +33,7 @@ configure do
     provider :evernote, ENV['EVERNOTE_KEY'], ENV['EVERNOTE_SECRET'], :client_options => { :site => 'https://sandbox.evernote.com' }
     provider :facebook, ENV['FACEBOOK_KEY'], ENV['FACEBOOK_SECRET'], :scope => 'user_photos,user_status', :display => 'popup'
     provider :twitter, ENV['TWITTER_KEY'], ENV['TWITTER_SECRET']
+    provider :foursquare, ENV['FOURSQUARE_KEY'], ENV['FOURSQUARE_SECRET']
   end
 end
 
@@ -81,6 +84,8 @@ get '/auth/:provider/callback' do
   when 'facebook'
     @user.update_attributes(facebook_token: request.env['omniauth.auth']['credentials']['token'],
           facebook_id: request.env['omniauth.auth']['uid'])
+  when 'foursquare'
+    @user.update_attributes(foursquare_token: request.env['omniauth.auth']['credentials']['token'])
   end
   redirect '/services'
 end

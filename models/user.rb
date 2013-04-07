@@ -1,5 +1,14 @@
 class User < ActiveRecord::Base
 
+  def foursquare
+    @foursquare_client = Foursquare2::Client.new(:oauth_token => self.foursquare_token)
+  end
+
+  def foursquare_checkins(date=Date.today)
+    foursquare.user_checkins(afterTimestamp: Date.today.to_datetime.to_i, beforeTimestamp: (Date.tomorrow.to_datetime-1.seconds).to_i, sort: 'oldestfirst').items.map do |checkin|
+      {type: 'foursquare_checkins', created_at: DateTime.strptime((checkin.createdAt+checkin.timeZoneOffset*60).to_s,'%s'), content: checkin.shout, venue: checkin.venue.name, photo_url: (checkin.photos.present? ? checkin.photos.items.first.sizes.items.first.url : nil)}
+    end
+  end
 
   def facebook
     @facebook_client ||= Koala::Facebook::API.new(self.facebook_token)
@@ -7,21 +16,21 @@ class User < ActiveRecord::Base
 
   def facebook_status(date=Date.today)
     facebook.get_connections("me", 'statuses', limit: 3).reverse.map do |status|
-      {type: 'facebook_status', created_at: status['updated_time'].to_datetime, content: status['message']}
+      {type: 'facebook_status', created_at: status['updated_time'].to_datetime + 2.hours, content: status['message']}
     end
     #.select{|t| t.created_at.to_date == date}
   end
 
   def facebook_photos(date=Date.today)
     facebook.get_connections("me", 'photos/uploaded', limit: 3).reverse.map do |photo|
-      {type: 'facebook_photos', created_at: photo['created_time'].to_datetime, caption: photo['name'], photo_url: photo['source']}
+      {type: 'facebook_photos', created_at: photo['created_time'].to_datetime + 2.hours, caption: photo['name'], photo_url: photo['source']}
     end
     #.select{|t| t.created_at.to_date == date}
   end
 
   def facebook_links(date=Date.today)
     facebook.get_connections("me", 'links', limit: 3).reverse.map do |link|
-      {type: 'facebook_links', created_at: link['created_time'].to_datetime, link: link['link'], link_picture: link['picture'], link_name: link['name'],link_description: link['description'], message: link['message']}
+      {type: 'facebook_links', created_at: link['created_time'].to_datetime + 2.hours, link: link['link'], link_picture: link['picture'], link_name: link['name'],link_description: link['description'], message: link['message']}
     end
     #.select{|t| t.created_at.to_date == date}
   end
@@ -108,7 +117,7 @@ class User < ActiveRecord::Base
   end
 
   def activities(date=Date.today)
-    all = self.tweets(date) + self.eyeem_photos(date) + self.facebook_status(date) + self.facebook_photos(date) + self.facebook_links(date)
+    all = self.tweets(date) + self.eyeem_photos(date) + self.facebook_status(date) + self.facebook_photos(date) + self.facebook_links(date) + self.foursquare_checkins(date)
     #binding.remote_pry
     all.sort_by { |hsh| time = Time.new(2013,4,7,hsh[:created_at].hour,hsh[:created_at].min) }
   end
