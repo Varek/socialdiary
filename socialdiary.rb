@@ -13,10 +13,14 @@ require 'pry-remote'
 require 'twitter'
 require 'evernote_oauth'
 require 'evernote-thrift'
+require 'faraday'
+require 'faraday_middleware'
+require 'EyeEmConnector'
+require 'koala'
+
 
 require './models/user'
 require './config/environments'
-
 
 configure do
   set :sessions, true
@@ -25,7 +29,7 @@ configure do
 
   use OmniAuth::Builder do
     provider :evernote, ENV['EVERNOTE_KEY'], ENV['EVERNOTE_SECRET'], :client_options => { :site => 'https://sandbox.evernote.com' }
-    provider :facebook, ENV['FACEBOOK_KEY'], ENV['FACEBOOK_SECRET']
+    provider :facebook, ENV['FACEBOOK_KEY'], ENV['FACEBOOK_SECRET'], :scope => 'user_photos,user_status', :display => 'popup'
     provider :twitter, ENV['TWITTER_KEY'], ENV['TWITTER_SECRET']
   end
 end
@@ -39,8 +43,27 @@ before do
 end
 
 get '/' do
-  erb "
-  <a href='http://localhost:5000/auth/evernote'>Login with Evernote</a><br>"
+  erb :home
+end
+
+get '/auth/eyeem' do
+  redirect "http://www.eyeem.com/oauth/authorize?response_type=code&client_id=#{ENV['EYEEM_KEY']}&redirect_uri=http://localhost:5000/auth/eyeem/callback"
+end
+
+get '/auth/eyeem/callback' do
+  if params[:code]
+    faraday = Faraday::Connection.new(:url => "http://www.eyeem.com/api/v2/", :ssl => {:verify => false}) do |c|
+      c.use Faraday::Request::UrlEncoded  # encode request params as "www-form-urlencoded"
+      c.use Faraday::Response::Logger     # log request & response to STDOUT
+      c.use Faraday::Adapter::NetHttp     # perform requests with Net::HTTP
+    end
+    faraday_response = faraday.post('oauth/token',{:client_id => ENV['EYEEM_KEY'], :client_secret => ENV['EYEEM_SECRECT'], :redirect_uri => "http://localhost:5000/auth/eyeem/callback&code=#{params[:code]}", :grant_type => 'authorization_code'})
+    binding.remote_pry
+    erb "<h1>eyeem</h1>
+         <pre>#{JSON.pretty_generate(faraday_response)}</pre>"
+  else
+    redirect '/services'
+  end
 end
 
 get '/auth/:provider/callback' do
@@ -63,8 +86,7 @@ get '/auth/:provider/callback' do
 end
 
 get '/services' do
-  #<a href='http://localhost:5000/auth/facebook'>Login with Facebook</a><br>
-  erb "<a href='http://localhost:5000/auth/twitter'>Login with Twitter</a><br>"
+  erb :services
 end
 
 get '/auth/failure' do
@@ -86,9 +108,13 @@ get '/diary' do
     @activities = MultiJson.decode(params[:activities], symbolize_keys: true)
     @activities.each{|a| a[:created_at] = DateTime.parse(a[:created_at])}
   else
-    @activities = @user.tweets
+    @activities = @user.activities(Date.yesterday)
   end
-  @date = Date.parse(params[:date]) || Date.today
+  @date = if params[:date].present?
+    Date.parse(params[:date])
+  else
+    Date.yesterday
+  end
   erb :diary, layout: false
 end
 

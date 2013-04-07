@@ -1,6 +1,51 @@
 class User < ActiveRecord::Base
 
 
+  def facebook
+    @facebook_client ||= Koala::Facebook::API.new(self.facebook_token)
+  end
+
+  def facebook_status(date=Date.today)
+    facebook.get_connections("me", 'statuses', limit: 3).reverse.map do |status|
+      {type: 'facebook_status', created_at: status['updated_time'].to_datetime, content: status['message']}
+    end
+    #.select{|t| t.created_at.to_date == date}
+  end
+
+  def facebook_photos(date=Date.today)
+    facebook.get_connections("me", 'photos/uploaded', limit: 3).reverse.map do |photo|
+      {type: 'facebook_photos', created_at: photo['created_time'].to_datetime, caption: photo['name'], photo_url: photo['source']}
+    end
+    #.select{|t| t.created_at.to_date == date}
+  end
+
+  def facebook_links(date=Date.today)
+    facebook.get_connections("me", 'links', limit: 3).reverse.map do |link|
+      {type: 'facebook_links', created_at: link['created_time'].to_datetime, link: link['link'], link_picture: link['picture'], link_name: link['name'],link_description: link['description'], message: link['message']}
+    end
+    #.select{|t| t.created_at.to_date == date}
+  end
+
+  def eyeem
+    if @eyeem_client.blank?
+      EyeEmConnector.configure do |config|
+        config.client_id = ENV['EYEEM_KEY']
+        config.client_secret = ENV['EYEEM_SECRET']
+        config.access_token = self.eyeem_token
+      end
+      @eyeem_client ||= EyeEmConnector
+    else
+      @eyeem_client
+    end
+  end
+
+  def eyeem_photos(date=Date.today)
+    eyeem.user_photos('me',limit: 3, detailed: true)['photos']['items'].reverse.map {|photo|
+      {type: 'eyeem_photo', created_at: DateTime.parse(photo['updated']), caption: photo['caption'], photo_url: photo['photoUrl']}}
+    #.select{|t| t.created_at.to_date == date}
+
+  end
+
   def twitter
     @twitter_client ||= Twitter.configure do |config|
       config.consumer_key = ENV['TWITTER_KEY']
@@ -13,8 +58,8 @@ class User < ActiveRecord::Base
   def tweets(date=Date.today)
     twitter.user_timeline(:count => 50).select{|t| t.created_at.to_date == date}.reverse.map do |tweet|
         tweet_content = tweet.text
-        tweet.urls.each {|w| tweet_content.gsub!(w.url,"<a href='#{w.expanded_url}'>#{w.display_url}</a>")}
-        {type: 'tweet', created_at: tweet.created_at, content: tweet_content}
+        tweet.urls.each {|w| tweet_content.gsub!(w.url,"<a shape='rect' style='margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;' href='#{w.expanded_url}'>#{w.display_url}</a>")}
+        {type: 'tweet', created_at: tweet.created_at.to_datetime, content: tweet_content}
       end
   end
 
@@ -62,10 +107,15 @@ class User < ActiveRecord::Base
     end
   end
 
+  def activities(date=Date.today)
+    all = self.tweets(date) + self.eyeem_photos(date) + self.facebook_status(date) + self.facebook_photos(date) + self.facebook_links(date)
+    #binding.remote_pry
+    all.sort_by { |hsh| time = Time.new(2013,4,7,hsh[:created_at].hour,hsh[:created_at].min) }
+  end
+
   def render_social_activity(date=Date.today)
     request = Rack::MockRequest.new(Sinatra::Application)
-    activities = self.tweets(date).to_json
-    request.get('/diary',:params => "date=#{date}&activities=#{activities}").body
+    request.get('/diary',:params => "date=#{date}&activities=#{self.activities(date).to_json}").body
   end
 
   def store_diary(date)

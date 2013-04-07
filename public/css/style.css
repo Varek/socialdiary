@@ -1,0 +1,108 @@
+
+body {
+	background-color:#373737;
+	font-family: 'Noto Sans', sans-serif;
+}
+
+#header{
+background-image: url(../images/majic.jpg);
+background-repeat:no-repeat;
+text-align:center;
+width:1000px;
+height:50px;
+margin:auto;
+padding-top:40px;
+margin-top:25px;
+margin-bottom:100px;
+}
+
+#logo{
+background-image: url(../images/majic2.jpg);
+background-repeat:no-repeat;
+text-align:center;
+width:800px;
+height:408px;
+margin:auto;
+margin-top:15px;
+margin-bottom:100px;
+background-position:center;
+}
+
+
+h1{
+font-family: 'Noto Sans', sans-serif;
+font-size:36px;
+color: #eee;
+font-weight:lighter;
+}
+
+#timeline{
+text-align:center;
+width:367px;
+margin:auto;
+padding-bottom:50px;
+}
+
+#twitter_card{
+width:367px;
+margin:auto;
+}
+
+#twitter_card_header{
+width:367px;
+height:35px;
+background-image:url(../images/twitter_card_header.jpg);
+}
+
+#facebook_card{
+width:367px;
+margin:auto;
+}
+
+#facebook_card_header{
+width:367px;
+height:35px;
+background-image:url(../images/facebook_card_header.jpg);
+}
+
+#eyeem_card{
+width:367px;
+margin:auto;
+}
+
+#eyeem_card_header{
+width:367px;
+height:35px;
+background-image:url(../images/eyeem_card_header.jpg);
+}
+
+.card_body{
+width:347px;
+padding-left: 10px;
+padding-right: 10px;
+background-color:#fff;
+padding-top:15px;
+padding-bottom:25px;
+word-wrap: break-word;
+line-height:normal;
+text-align:left;
+color:#333;
+}
+
+p.card_title{
+padding-top:12px;
+color:#fff;
+font-size:12px;
+}
+
+.seperator{
+height:75px;
+width:1px;
+margin:auto;
+background-color:#444;
+}
+
+.card_body img{
+width:347px;
+margin-top:10px;
+}

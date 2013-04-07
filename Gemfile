@@ -23,3 +23,7 @@ gem 'evernote_oauth'
 gem 'evernote-thrift'
 gem "twitter"
 gem 'foreman'
+gem 'faraday'
+gem "faraday_middleware", "~> 0.8.7"
+gem "EyeEmConnector"
+gem "koala", "~> 1.6.0"
