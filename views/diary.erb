@@ -2,110 +2,110 @@
 <!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">
 <en-note>
   <div style="font-size: 16px">
-    <div style="outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;">
-     <div style="outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:rgb(55, 55, 55);line-height:1;font-family:'Noto Sans', sans-serif;">
+    <div style="outline:rgb(0, 0, 0); vertical-align:baseline;background-color:transparent;">
+     <div style="outline:rgb(0, 0, 0); vertical-align:baseline;background-color:rgb(55, 55, 55);line-height:1;font-family:'Noto Sans', sans-serif;">
       <span></span>
-      <div style="margin:25px auto 100px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;background-image:url(http://localhost:5000/images/majic.jpg);text-align:center;width:1000px;height:50px;padding-top:40px;background-repeat:no-repeat no-repeat;">
+      <div style="margin:25px auto 100px;padding:0px;border:0px;outline:rgb(0, 0, 0); vertical-align:baseline;background-color:transparent;background-image:url(http://localhost:5000/images/majic.jpg);text-align:center;width:1000px;height:50px;padding-top:40px;background-repeat:no-repeat no-repeat;">
         <h1 style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:36px;vertical-align:baseline;background-color:transparent;font-family:'Noto Sans', sans-serif;color:rgb(238, 238, 238);font-weight:lighter;">
           <%= @date.strftime("%A, %d. %B %Y") %>
         </h1>
       </div>
-    <div style="margin:auto;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;text-align:center;width:367px;padding-bottom:50px;">
+    <div style="margin:auto;padding:0px;border:0px;outline:rgb(0, 0, 0); vertical-align:baseline;background-color:transparent;text-align:center;width:367px;padding-bottom:50px;">
       <%# binding.remote_pry %>
       <% @activities.each do |activity|%>
         <% if activity[:type] == 'tweet' %>
-          <div style="margin:auto;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;width:367px;">
-           <div style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;width:367px;height:35px;background-image:url(http://localhost:5000/images/twitter_card_header.jpg);">
+          <div style="margin:auto;padding:0px;border:0px;outline:rgb(0, 0, 0); vertical-align:baseline;background-color:transparent;width:367px;">
+           <div style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0); vertical-align:baseline;background-color:transparent;width:367px;height:35px;background-image:url(http://localhost:5000/images/twitter_card_header.jpg);">
             <p style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:12px;vertical-align:baseline;background-color:transparent;padding-top:12px;color:rgb(255, 255, 255);">
              <%= activity[:created_at].strftime("%H:%M") %>
             </p>
            </div>
-           <div style="margin:0px;padding:15px 10px 25px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:rgb(255, 255, 255);width:347px;word-wrap:break-word;line-height:normal;text-align:left;color:rgb(51, 51, 51);">
-            <p style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;">
+           <div style="margin:0px;padding:15px 10px 25px;border:0px;outline:rgb(0, 0, 0); vertical-align:baseline;background-color:rgb(255, 255, 255);width:347px;word-wrap:break-word;line-height:normal;text-align:left;color:rgb(51, 51, 51);">
+            <p style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0); vertical-align:baseline;background-color:transparent;">
               <%= activity[:content] %>
             </p>
            </div>
           </div>
         <%elsif activity[:type] == 'eyeem_photo' %>
-          <div style="margin:auto;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;width:367px;">
-            <div style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;width:367px;height:35px;background-image:url(http://localhost:5000/images/eyeem_card_header.jpg);">
+          <div style="margin:auto;padding:0px;border:0px;outline:rgb(0, 0, 0); vertical-align:baseline;background-color:transparent;width:367px;">
+            <div style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0); vertical-align:baseline;background-color:transparent;width:367px;height:35px;background-image:url(http://localhost:5000/images/eyeem_card_header.jpg);">
               <p style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:12px;vertical-align:baseline;background-color:transparent;padding-top:12px;color:rgb(255, 255, 255);">
                 <%= activity[:created_at].strftime("%H:%M") %>
               </p>
             </div>
-            <div style="margin:0px;padding:15px 10px 25px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:rgb(255, 255, 255);width:347px;word-wrap:break-word;line-height:normal;text-align:left;color:rgb(51, 51, 51);">
-              <p style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;">
+            <div style="margin:0px;padding:15px 10px 25px;border:0px;outline:rgb(0, 0, 0); vertical-align:baseline;background-color:rgb(255, 255, 255);width:347px;word-wrap:break-word;line-height:normal;text-align:left;color:rgb(51, 51, 51);">
+              <p style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0); vertical-align:baseline;background-color:transparent;">
                 <%= activity[:caption] %>
               </p>
-              <img src="<%= activity[:photo_url]%>" width="347" style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;width:347px;margin-top:10px;" />
+              <img src="<%= activity[:photo_url]%>" width="347" style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0); vertical-align:baseline;background-color:transparent;width:347px;margin-top:10px;" />
             </div>
           </div>
         <% elsif activity[:type] == 'facebook_status' %>
-          <div style="margin:auto;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;width:367px;">
-           <div style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;width:367px;height:35px;background-image:url(http://localhost:5000/images/facebook_card_header.jpg);">
+          <div style="margin:auto;padding:0px;border:0px;outline:rgb(0, 0, 0); vertical-align:baseline;background-color:transparent;width:367px;">
+           <div style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0); vertical-align:baseline;background-color:transparent;width:367px;height:35px;background-image:url(http://localhost:5000/images/facebook_card_header.jpg);">
             <p style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:12px;vertical-align:baseline;background-color:transparent;padding-top:12px;color:rgb(255, 255, 255);">
              <%= activity[:created_at].strftime("%H:%M") %>
             </p>
            </div>
-           <div style="margin:0px;padding:15px 10px 25px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:rgb(255, 255, 255);width:347px;word-wrap:break-word;line-height:normal;text-align:left;color:rgb(51, 51, 51);">
-            <p style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;">
+           <div style="margin:0px;padding:15px 10px 25px;border:0px;outline:rgb(0, 0, 0); vertical-align:baseline;background-color:rgb(255, 255, 255);width:347px;word-wrap:break-word;line-height:normal;text-align:left;color:rgb(51, 51, 51);">
+            <p style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0); vertical-align:baseline;background-color:transparent;">
              <%= activity[:content] %>
             </p>
            </div>
           </div>
         <% elsif activity[:type] == 'facebook_photos' %>
-          <div style="margin:auto;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;width:367px;">
-           <div style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;width:367px;height:35px;background-image:url(http://localhost:5000/images/facebook_card_header.jpg);">
+          <div style="margin:auto;padding:0px;border:0px;outline:rgb(0, 0, 0); vertical-align:baseline;background-color:transparent;width:367px;">
+           <div style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0); vertical-align:baseline;background-color:transparent;width:367px;height:35px;background-image:url(http://localhost:5000/images/facebook_card_header.jpg);">
             <p style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:12px;vertical-align:baseline;background-color:transparent;padding-top:12px;color:rgb(255, 255, 255);">
              <%= activity[:created_at].strftime("%H:%M") %>
             </p>
            </div>
-           <div style="margin:0px;padding:15px 10px 25px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:rgb(255, 255, 255);width:347px;word-wrap:break-word;line-height:normal;text-align:left;color:rgb(51, 51, 51);">
-            <p style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;">
+           <div style="margin:0px;padding:15px 10px 25px;border:0px;outline:rgb(0, 0, 0); vertical-align:baseline;background-color:rgb(255, 255, 255);width:347px;word-wrap:break-word;line-height:normal;text-align:left;color:rgb(51, 51, 51);">
+            <p style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0); vertical-align:baseline;background-color:transparent;">
              <%= activity[:caption] %>
             </p>
-            <img src="<%= activity[:photo_url]%>" width="347" style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;width:347px;margin-top:10px;" />
+            <img src="<%= activity[:photo_url]%>" width="347" style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0); vertical-align:baseline;background-color:transparent;width:347px;margin-top:10px;" />
            </div>
           </div>
         <% elsif activity[:type] == 'facebook_links' %>
-          <div style="margin:auto;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;width:367px;">
-           <div style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;width:367px;height:35px;background-image:url(http://localhost:5000/images/facebook_card_header.jpg);">
+          <div style="margin:auto;padding:0px;border:0px;outline:rgb(0, 0, 0); vertical-align:baseline;background-color:transparent;width:367px;">
+           <div style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0); vertical-align:baseline;background-color:transparent;width:367px;height:35px;background-image:url(http://localhost:5000/images/facebook_card_header.jpg);">
             <p style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:12px;vertical-align:baseline;background-color:transparent;padding-top:12px;color:rgb(255, 255, 255);">
              <%= activity[:created_at].strftime("%H:%M") %>
             </p>
            </div>
-           <div style="margin:0px;padding:15px 10px 25px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:rgb(255, 255, 255);width:347px;word-wrap:break-word;line-height:normal;text-align:left;color:rgb(51, 51, 51);">
-            <p style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;">
-            <a shape='rect' style='margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;' href='<%= activity[:link] %>'><%=activity[:link_name] %></a>
+           <div style="margin:0px;padding:15px 10px 25px;border:0px;outline:rgb(0, 0, 0); vertical-align:baseline;background-color:rgb(255, 255, 255);width:347px;word-wrap:break-word;line-height:normal;text-align:left;color:rgb(51, 51, 51);">
+            <p style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0); vertical-align:baseline;background-color:transparent;">
+            <a shape='rect' style='margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0); vertical-align:baseline;background-color:transparent;' href='<%= activity[:link] %>'><%=activity[:link_name] %></a>
              <%= activity[:message] %>
              <%= activity[:link_description] %>
             </p>
-            <img src="<%= activity[:link_picture]%>" width="347" height="347" style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;width:347px;margin-top:10px;" />
+            <img src="<%= activity[:link_picture]%>" width="347" height="347" style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0); vertical-align:baseline;background-color:transparent;width:347px;margin-top:10px;" />
            </div>
           </div>
         <% elsif activity[:type] == 'foursquare_checkins' %>
-          <div style="margin:auto;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;width:367px;">
-           <div style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;width:367px;height:35px;background-image:url(http://localhost:5000/images/foursquare_card_header.jpg);">
+          <div style="margin:auto;padding:0px;border:0px;outline:rgb(0, 0, 0); vertical-align:baseline;background-color:transparent;width:367px;">
+           <div style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0); vertical-align:baseline;background-color:transparent;width:367px;height:35px;background-image:url(http://localhost:5000/images/foursquare_card_header.jpg);">
             <p style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:12px;vertical-align:baseline;background-color:transparent;padding-top:12px;color:rgb(255, 255, 255);">
              <%= activity[:created_at].strftime("%H:%M") %>
             </p>
            </div>
-           <div style="margin:0px;padding:15px 10px 25px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:rgb(255, 255, 255);width:347px;word-wrap:break-word;line-height:normal;text-align:left;color:rgb(51, 51, 51);">
-            <p style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;">
+           <div style="margin:0px;padding:15px 10px 25px;border:0px;outline:rgb(0, 0, 0); vertical-align:baseline;background-color:rgb(255, 255, 255);width:347px;word-wrap:break-word;line-height:normal;text-align:left;color:rgb(51, 51, 51);">
+            <p style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0); vertical-align:baseline;background-color:transparent;">
              checked in at
              <%= activity[:venue] %>
             </p>
-            <p style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;">
+            <p style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0); vertical-align:baseline;background-color:transparent;">
              <%= activity[:content] %>
             </p>
             <% if activity[:photo_url].present? %>
-              <img src="<%= activity[:photo_url]%>" width="347" style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;width:347px;margin-top:10px;" />
+              <img src="<%= activity[:photo_url]%>" width="347" style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0); vertical-align:baseline;background-color:transparent;width:347px;margin-top:10px;" />
             <% end %>
             </div>
            </div>
           </div>
         <% end %>
-        <div style="margin:auto;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:rgb(68, 68, 68);height:75px;width:1px;">
+        <div style="margin:auto;padding:0px;border:0px;outline:rgb(0, 0, 0); vertical-align:baseline;background-color:rgb(68, 68, 68);height:75px;width:1px;">
             </div>
       <% end%>
     </div>

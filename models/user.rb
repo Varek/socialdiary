@@ -67,7 +67,7 @@ class User < ActiveRecord::Base
   def tweets(date=Date.today)
     twitter.user_timeline(:count => 50).select{|t| t.created_at.to_date == date}.reverse.map do |tweet|
         tweet_content = tweet.text
-        tweet.urls.each {|w| tweet_content.gsub!(w.url,"<a shape='rect' style='margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);font-size:100%;vertical-align:baseline;background-color:transparent;' href='#{w.expanded_url}'>#{w.display_url}</a>")}
+        #tweet.urls.each {|w| tweet_content.gsub!(w.url,"<a shape='rect' style='margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0);vertical-align:baseline;background-color:transparent;' href='#{w.expanded_url}'>#{w.display_url}</a>")}
         {type: 'tweet', created_at: tweet.created_at.to_datetime, content: tweet_content}
       end
   end
@@ -117,7 +117,7 @@ class User < ActiveRecord::Base
   end
 
   def activities(date=Date.today)
-    all = self.tweets(date) + self.eyeem_photos(date) + self.facebook_status(date) + self.facebook_photos(date) + self.facebook_links(date) + self.foursquare_checkins(date)
+    all = self.tweets(date) + self.eyeem_photos(date) + self.facebook_status(date) + self.facebook_photos(date)+ self.foursquare_checkins(date)# + self.facebook_links(date)
     #binding.remote_pry
     all.sort_by { |hsh| time = Time.new(2013,4,7,hsh[:created_at].hour,hsh[:created_at].min) }
   end
@@ -133,6 +133,12 @@ class User < ActiveRecord::Base
     note.notebookGuid = stacked_notebook(date).guid
     note.content = render_social_activity(date)
     created_note = note_store.createNote(note)
+    # begin
+    #   created_note = note_store.createNote(note)
+    # rescue => e
+    #   puts e.inspect
+    # end
+
     self.update_attribute(:last_diary_created_at, date)
   end
 
