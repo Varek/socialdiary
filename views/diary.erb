@@ -11,7 +11,6 @@
         </h1>
       </div>
     <div style="margin:auto;padding:0px;border:0px;outline:rgb(0, 0, 0); vertical-align:baseline;background-color:transparent;text-align:center;width:367px;padding-bottom:50px;">
-      <%# binding.remote_pry %>
       <% @activities.each do |activity|%>
         <% if activity[:type] == 'tweet' %>
           <div style="margin:auto;padding:0px;border:0px;outline:rgb(0, 0, 0); vertical-align:baseline;background-color:transparent;width:367px;">
@@ -80,7 +79,6 @@
              <%= activity[:message] %>
              <%= activity[:link_description] %>
             </p>
-            <img src="<%= activity[:link_picture]%>" width="347" height="347" style="margin:0px;padding:0px;border:0px;outline:rgb(0, 0, 0); vertical-align:baseline;background-color:transparent;width:347px;margin-top:10px;" />
            </div>
           </div>
         <% elsif activity[:type] == 'foursquare_checkins' %>
@@ -103,7 +101,6 @@
             <% end %>
             </div>
            </div>
-          </div>
         <% end %>
         <div style="margin:auto;padding:0px;border:0px;outline:rgb(0, 0, 0); vertical-align:baseline;background-color:rgb(68, 68, 68);height:75px;width:1px;">
             </div>

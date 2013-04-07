@@ -113,12 +113,12 @@ get '/diary' do
     @activities = MultiJson.decode(params[:activities], symbolize_keys: true)
     @activities.each{|a| a[:created_at] = DateTime.parse(a[:created_at])}
   else
-    @activities = @user.activities(Date.yesterday)
+    @activities = @user.activities(Date.today)
   end
   @date = if params[:date].present?
     Date.parse(params[:date])
   else
-    Date.yesterday
+    Date.today
   end
   erb :diary, layout: false
 end
