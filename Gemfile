@@ -10,6 +10,7 @@ gem 'omniauth-evernote'
 gem 'omniauth-facebook'
 gem 'omniauth-twitter'
 gem 'omniauth-foursquare'
+gem 'omniauth-eyeem'
 
 gem "rake"
 gem 'activerecord'

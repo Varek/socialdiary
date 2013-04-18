@@ -10,6 +10,7 @@ require 'omniauth-evernote'
 require 'omniauth-facebook'
 require 'omniauth-twitter'
 require 'omniauth-foursquare'
+require 'omniauth-eyeem'
 require 'pry-remote'
 require 'twitter'
 require 'evernote_oauth'
@@ -34,6 +35,7 @@ configure do
     provider :facebook, ENV['FACEBOOK_KEY'], ENV['FACEBOOK_SECRET'], :scope => 'user_photos,user_status', :display => 'popup'
     provider :twitter, ENV['TWITTER_KEY'], ENV['TWITTER_SECRET']
     provider :foursquare, ENV['FOURSQUARE_KEY'], ENV['FOURSQUARE_SECRET']
+    provider :eyeem, ENV['EYEEM_KEY'], ENV['EYEEM_SECRET']
   end
 end
 
@@ -47,26 +49,6 @@ end
 
 get '/' do
   erb :home
-end
-
-get '/auth/eyeem' do
-  redirect "http://www.eyeem.com/oauth/authorize?response_type=code&client_id=#{ENV['EYEEM_KEY']}&redirect_uri=http://localhost:5000/auth/eyeem/callback"
-end
-
-get '/auth/eyeem/callback' do
-  if params[:code]
-    faraday = Faraday::Connection.new(:url => "http://www.eyeem.com/api/v2/", :ssl => {:verify => false}) do |c|
-      c.use Faraday::Request::UrlEncoded  # encode request params as "www-form-urlencoded"
-      c.use Faraday::Response::Logger     # log request & response to STDOUT
-      c.use Faraday::Adapter::NetHttp     # perform requests with Net::HTTP
-    end
-    faraday_response = faraday.post('oauth/token',{:client_id => ENV['EYEEM_KEY'], :client_secret => ENV['EYEEM_SECRECT'], :redirect_uri => "http://localhost:5000/auth/eyeem/callback&code=#{params[:code]}", :grant_type => 'authorization_code'})
-    binding.remote_pry
-    erb "<h1>eyeem</h1>
-         <pre>#{JSON.pretty_generate(faraday_response)}</pre>"
-  else
-    redirect '/services'
-  end
 end
 
 get '/auth/:provider/callback' do
@@ -86,6 +68,8 @@ get '/auth/:provider/callback' do
           facebook_id: request.env['omniauth.auth']['uid'])
   when 'foursquare'
     @user.update_attributes(foursquare_token: request.env['omniauth.auth']['credentials']['token'])
+  when 'eyeem'
+    @user.update_attributes(eyeem_token: request.env['omniauth.auth']['credentials']['token'])
   end
   redirect '/services'
 end
