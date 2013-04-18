@@ -123,7 +123,7 @@ class User < ActiveRecord::Base
 
   def render_social_activity(date=Date.today)
     request = Rack::MockRequest.new(Sinatra::Application)
-    request.get('/diary',:params => "date=#{date}&activities=#{self.activities(date).to_json}").body
+    request.get('/diary',:params => "date=#{date}&user=#{self.id}").body
   end
 
   def store_diary(date)

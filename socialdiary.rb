@@ -93,17 +93,18 @@ get '/protected' do
 end
 
 get '/diary' do
-  if params[:activities].present?
-    @activities = MultiJson.decode(params[:activities], symbolize_keys: true)
-    @activities.each{|a| a[:created_at] = DateTime.parse(a[:created_at])}
-  else
-    @activities = @user.activities(Date.today)
-  end
   @date = if params[:date].present?
     Date.parse(params[:date])
   else
     Date.today
   end
+
+  if params[:user].present?
+    @user = User.find(params[:user])
+  end
+
+  @activities = @user.activities(@date)
+
   erb :diary, layout: false
 end
 
